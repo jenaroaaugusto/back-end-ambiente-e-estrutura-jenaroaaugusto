@@ -1,0 +1,381 @@
+swagger: "2.0"
+info:
+  description: "APP - Um problema - Sistema desenvolvido ao longo da disciplina de TecWeb - UFSJ"
+  version: "1.0.0"
+  title: "Um problema"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "jenaroaaugusto@outlook.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v1"
+tags:
+- name: "demandas"
+  description: "Tudo Relacionado a vazamentos e burracos"
+
+- name: "gerirdemandas"
+  description: "Tudo Relacionado sobre a gestão das demandas"
+
+- name: "usuarios"
+  description: "Operations about user"
+  externalDocs:
+    description: "Find out more about our store"
+    url: "http://swagger.io"
+schemes:
+- "http"
+paths:
+  /demanda:
+    post:
+      tags:
+       - "demandas"
+      summary: "Adciona uma nova demanda no sistema"
+      operationId: "addDemanda"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto de demandas a ser adcionado no sistema"
+        required: true
+        schema:
+          $ref: '#/definitions/Dema'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Dema'
+  /demanda/{demaId}:
+    get:
+      tags:
+      - "demandas"
+      summary: "Busca demanda pelo ID"
+      operationId: "getDemaById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "demaId"
+        in: "path"
+        description: "ID of demanda to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Sucesso"
+          schema:
+            $ref: "#/definitions/Dema"
+        400:
+          description: "Not Fund ID Invalido"
+        404:
+          description: "Not Acess"
+    put:
+      tags:
+      - "demandas"
+      summary: "Atualizar uma demanda no sistema"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "demaId"
+        in: "path"
+        description: "ID that need to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        description: "Updated demanda object "
+        schema:
+          $ref: '#/definitions/Dema'
+      responses:
+        200:
+          description: "Sucesso"
+          schema:
+            $ref: '#/definitions/Dema'
+        400:
+          description: "Not Acess" 
+        404:
+          description: "Not Fund ID Invalido"
+    delete:
+      tags:
+      - "demandas"
+      summary: "Remove uma demanda"
+      operationId: "deleteDemanda"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "demaId"
+        in: "path"
+        description: "Bike ID to Delate" 
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: '#/definitions/Dema'
+        400:
+          description: "Not Acess ID Invalido" 
+        404:
+          description: "Not Fund"
+          
+  /gerirdemandas:
+    post:
+      tags:
+       - "gerirdemandas"
+      summary: "Atualizar os estados da demanda"
+      operationId: "addResposta"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto de demandas a ser adcionado no sistema"
+        required: true
+        schema:
+          $ref: '#/definitions/Gerir'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Gerir'
+  /gerirdemandas/{gerirId}:
+    get:
+      tags:
+      - "gerirdemandas"
+      summary: "Busca demanda pelo ID"
+      operationId: "getGerirById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "gerirId"
+        in: "path"
+        description: "ID of demanda to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Sucesso"
+          schema:
+            $ref: "#/definitions/Dema"
+        400:
+          description: "Not Fund ID Invalido"
+        404:
+          description: "Not Acess"
+    put:
+      tags:
+      - "gerirdemandas"
+      summary: "Atualizar uma demanda no sistema"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "gerirId"
+        in: "path"
+        description: "ID that need to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        description: "Updated demanda object "
+        schema:
+          $ref: '#/definitions/Gerir'
+      responses:
+        200:
+          description: "Sucesso"
+          schema:
+            $ref: '#/definitions/Gerir'
+        400:
+          description: "Not Acess" 
+        404:
+          description: "Not Fund ID Invalido"
+    delete:
+      tags:
+      - "gerirdemandas"
+      summary: "Remove uma demanda"
+      operationId: "demaId"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "gerirId"
+        in: "path"
+        description: "Demanda ID to Delate" 
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: '#/definitions/Gerir'
+        400:
+          description: "Not Acess ID Invalido" 
+        404:
+          description: "Not Fund"
+  
+  /usuario:
+    post:
+      tags:
+       - "usuarios"
+      summary: "Adcionar um novo usuario"
+      operationId: "addUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto de usuario a ser adcionado no sistema"
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+  
+  /usuario/{userId}:
+    get:
+      tags:
+      - "usuarios"
+      summary: "Retornar Usuario pelo ID"
+      operationId: "getUserById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "ID of user to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Sucesso"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Not Fund ID Invalido"
+        404:
+          description: "Not Acess"
+    put:
+      tags:
+      - "usuarios"
+      summary: "Atualizar dados do Usuario"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "ID that need to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        description: "Updated demanda object "
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: "Sucesso"
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: "Not Acess" 
+        404:
+          description: "Not Fund ID Invalido"
+    delete:
+      tags:
+      - "usuarios"
+      summary: "Remover um Usuario"
+      operationId: "DelSUserId"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "User ID to Delate" 
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: "Not Acess ID Invalido" 
+        404:
+          description: "Not Fund"
+
+definitions:
+  Dema:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      categoria:
+        type: "string"
+      local:
+        type: "string"
+      resumo:
+        type: "string"
+      status:
+        type: "string"
+        enum: 
+          - "resolvido"
+          - "analise"
+          - "recebida"
+          - "negado"
+  Gerir:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      categoria:
+        type: "string"
+      local:
+        type: "string"
+      resumo:
+        type: "string"
+      status:
+        type: "string"
+        enum: 
+          - "resolvido"
+          - "analise"
+          - "recebida"
+          - "negado"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nome:
+        type: "string"
+      cpf:
+        type: "integer"
+        format: "int64"
+      endereco:
+        type: "string"
+      email:
+        type: "string"
+     
