@@ -2,6 +2,12 @@ const { json } = require("body-parser");
 var express = require("express");
 var app = express();
 
+var mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    
+})
+
 app.use(express.json())
 
 // Rutes for Re
