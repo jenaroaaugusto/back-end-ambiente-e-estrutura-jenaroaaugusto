@@ -5,7 +5,10 @@ var app = express();
 var mysql = require("mysql");
 
 var connection = mysql.createConnection({
-    
+    host: "localhost",
+    user: 'jenaro',
+    password:'9haVCkd^UCdA',
+    database:"db_um_problema"
 })
 
 app.use(express.json())
@@ -13,15 +16,31 @@ app.use(express.json())
 // Rutes for Re
 app.post("/demanda", (req,resp) =>{
     var demanda = req.body;
-
+    // connection.query("SELECT * FROM demanda WHERE id=?");
     console.log(JSON.stringify(demanda));
     resp.send("OK")
 });
 
 app.get("/demanda/:demaId", (req,resp) =>{
     var demaId= req.params.demaId
-    resp.send("Successful Operation")
     console.log("GET - Demanda ID: "+demaId);
+
+    casa=connection.query("SELECT * FROM demandas WHERE iddemandas=?",[demaId], (err,result) => {
+        
+        if(err){
+            console.log(err);
+            resp.status(500).end();
+
+        }else{
+            resp.status(200);
+            resp.json(result)
+            
+        }
+    });
+
+
+    // resp.send("Sucesso")
+    // console.log("GET - Demanda ID: "+demaId);
 });
 
 app.put("/demanda/:demaId",(req,resp) => {

@@ -1,4 +1,6 @@
 # 9haVCkd^UCdA
+#  sudo mysql -u root -p
+
 swagger: "2.0"
 info:
   description: "APP - Um problema - Sistema desenvolvido ao longo da disciplina de TecWeb - UFSJ"
