@@ -16,9 +16,21 @@ app.use(express.json())
 // Rutes for Re
 app.post("/demanda", (req,resp) =>{
     var demanda = req.body;
-    // connection.query("SELECT * FROM demanda WHERE id=?");
-    console.log(JSON.stringify(demanda));
-    resp.send("OK")
+    console.log("POST-Demandas");
+    // 
+    connection.query("INSERT INTO demandas SET ?",[demanda],(err,result) =>{
+        if(err){
+            console.log(err);
+            resp.status(500).end();
+
+        }else{
+            resp.status(200);
+            resp.json(result)
+            
+        }
+    } );
+    // console.log(JSON.stringify(demanda));
+    // resp.send("OK")
 });
 
 app.get("/demanda/:demaId", (req,resp) =>{
@@ -45,8 +57,23 @@ app.get("/demanda/:demaId", (req,resp) =>{
 
 app.put("/demanda/:demaId",(req,resp) => {
     var demaId= req.params.demaId
-    resp.send("Successful Operation")
+    // resp.send("Successful Operation")
     console.log("PUT - Demanda ID: "+demaId);
+    var demanda = req.body;
+
+    connection.query("UPDATE demandas SET ? WHARE iddemandas=?",[demanda,demaId],(err,result) =>{
+
+        if(err){
+            console.log(err);
+            resp.status(500).end();
+
+        }else{
+            resp.status(200);
+            resp.json(result)
+            
+        }
+    } );
+
 });
 
 app.delete("/demanda/:demaId",(req,resp) => {
@@ -54,7 +81,23 @@ app.delete("/demanda/:demaId",(req,resp) => {
 
     resp.send("Successful Operation")
     console.log("DELETE - Demanda ID: "+demaId);
+
+    connection.query("DELETE FROM demandas WHARE iddemandas=?",[demaId],(err,result) =>{
+
+        if(err){
+            console.log(err);
+            resp.status(500).end();
+
+        }else{
+            resp.status(200);
+            resp.json(result)
+            
+        }
+    } );
+
 });
+
+
 
 // Gerecenciar demandas
 
