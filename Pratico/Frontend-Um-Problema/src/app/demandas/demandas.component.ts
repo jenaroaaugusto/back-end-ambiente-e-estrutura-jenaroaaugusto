@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {DemandasService} from '../demandas.service';
 
 
@@ -30,7 +30,9 @@ export class DemandasComponent implements OnInit {
   ngOnInit() {
     this.service.getDemandas().subscribe(demandas =>this.dataSource=demandas)
   }
-
+  openNewDialog(): void{
+    const dialogRef = this.
+  }
 }
 
 @Component({
@@ -39,6 +41,12 @@ export class DemandasComponent implements OnInit {
 })
 export class MngDemandaDialog{
 
-    constructor(public dialogRef: MatDialogRef<MngDemandaDialog>){}
+    constructor(public dialogRef: MatDialogRef<MngDemandaDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: Demanda){}   
+      favoriteSeason: string;
+      seasons: string[] = ['Buraco', 'Vazamento']; 
    
+    onNoClick(): void{
+      this.dialogRef.close();
+    }
 }

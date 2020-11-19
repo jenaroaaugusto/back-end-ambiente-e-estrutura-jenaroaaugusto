@@ -13,6 +13,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http'
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatInputModule} from '@angular/material/input';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatTableModule,
     MatTabsModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatFormField,
+    FormsModule,
+    MatInputModule, 
+
+    MatRadioModule,
     BrowserAnimationsModule, 
     HttpClientModule
   ],

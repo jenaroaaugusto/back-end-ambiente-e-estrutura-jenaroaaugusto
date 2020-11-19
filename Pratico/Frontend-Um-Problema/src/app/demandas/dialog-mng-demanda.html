@@ -1,7 +1,35 @@
 <h1 mat-dialog-title>Demandas</h1>
 <div mat-dialog-content>
     <div class="row">
-        <div></div>
-
+        <div class="col-8">
+            <mat-form-fild style="width: 100%;">
+                <mat-label>Local</mat-label>
+                <input matInput [(ngModel)]="data.local">
+            </mat-form-fild>
+        </div>
     </div>
+    <div class="row">
+
+        <label id="example-radio-group-label">Categoria</label>
+        <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            [(ngModel)]="favoriteSeason">
+            <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="data.categorias">
+                {{season}}
+            </mat-radio-button>
+        </mat-radio-group> 
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <mat-form-fild style="width: 100%;">
+                <mat-label>Resumo</mat-label>
+                <input matInput [(ngModel)]="data.resumo">
+            </mat-form-fild>
+        </div>
+    </div>
+</div>
+<div mat-dialog-action aling ="end">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Salvar</button>
 </div>
