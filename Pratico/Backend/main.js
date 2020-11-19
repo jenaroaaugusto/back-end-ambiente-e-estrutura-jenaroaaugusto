@@ -1,5 +1,6 @@
 const { json } = require("body-parser");
 var express = require("express");
+var cors = require('cors');
 var app = express();
 
 var mysql = require("mysql");
@@ -9,9 +10,30 @@ var connection = mysql.createConnection({
     user: 'jenaro',
     password:'9haVCkd^UCdA',
     database:"db_um_problema"
-})
+});
+app.use(cors());
+app.use(express.json());
 
-app.use(express.json())
+
+app.get("/demanda", (req,resp) =>{
+    var demanda = req.body;
+    console.log("GET-Demandas");
+    // 
+    connection.query("SELECT * FROM demandas",(err,result) =>{
+        if(err){
+            console.log(err);
+            resp.status(500).end();
+
+        }else{
+            resp.status(200);
+            resp.json(result)
+            
+        }
+    } );
+    // console.log(JSON.stringify(demanda));
+    // resp.send("OK")
+});
+
 
 // Rutes for Re
 app.post("/demanda", (req,resp) =>{
