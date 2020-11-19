@@ -12,7 +12,7 @@ import { GestaoComponent } from './gestao/gestao.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http'
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http'
     MatButtonModule,
     MatTableModule,
     MatTabsModule,
+    MatDialogModule,
     BrowserAnimationsModule, 
     HttpClientModule
   ],
