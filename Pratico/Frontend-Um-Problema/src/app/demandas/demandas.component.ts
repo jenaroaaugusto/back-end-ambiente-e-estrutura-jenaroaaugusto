@@ -1,5 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, OnInit,NgModule } from '@angular/core';
+import {MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import {DemandasService} from '../demandas.service';
 
 
@@ -7,6 +9,7 @@ export class Demanda{
   iddemandas:number;
   categorias:string;
   local:string;
+  resumo:string;
   usuario_idusuario:string;
   status:string;
 }
@@ -17,24 +20,43 @@ export class Demanda{
 
 // ];
 
+
+
 @Component({
   selector: 'app-demandas',
   templateUrl: './demandas.component.html',
   styleUrls: ['./demandas.component.css']
 })
 export class DemandasComponent implements OnInit {
-  displayedColumns: string[]=['iddemandas','categorias','local','usuario_idusuario','status']
-  dataSource:Demanda[];
+  displayedColumns: string[]=['iddemandas','categorias','local','resumo','usuario_idusuario','status']
+  // dataSource:Demanda[];
+  dataSource = new MatTableDataSource<Demanda>();
   constructor( private service:DemandasService, public dialog:MatDialog) { }
 
   ngOnInit() {
-    this.service.getDemandas().subscribe(demandas =>this.dataSource=demandas)
+    this.service.getDemandas().subscribe(demandas =>this.dataSource.data=demandas)
   }
   openNewDialog(): void{
-    const dialogRef = this.
+    const dialogRef = this.dialog.open(MngDemandaDialog,{
+      width:'750px',
+      data:new Demanda()
+    });
+    
+    dialogRef.afterClosed().subscribe(demanda =>{
+      console.log(demanda);
+      this.service.setDemanda(demanda).subscribe(demaId =>{
+        console.log("No docomp"+demaId)
+        this.service.getDemanda(demaId).subscribe(newDemanda =>{
+          this.dataSource.data = this.dataSource.data.concat(newDemanda);
+          console.log("No comcateas"+demaId)
+        });
+      });
+    })
+
+
   }
 }
-
+ 
 @Component({
   selector: 'dialog-mng-demanda', 
   templateUrl:'dialog-mng-demanda.html'
@@ -43,8 +65,8 @@ export class MngDemandaDialog{
 
     constructor(public dialogRef: MatDialogRef<MngDemandaDialog>,
       @Inject(MAT_DIALOG_DATA) public data: Demanda){}   
-      favoriteSeason: string;
-      seasons: string[] = ['Buraco', 'Vazamento']; 
+      // favoriteSeason: string;
+      // seasons: string[] = ['Buraco', 'Vazamento']; 
    
     onNoClick(): void{
       this.dialogRef.close();

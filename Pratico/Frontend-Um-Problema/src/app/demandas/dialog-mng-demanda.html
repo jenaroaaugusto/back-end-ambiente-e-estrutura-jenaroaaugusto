@@ -2,13 +2,28 @@
 <div mat-dialog-content>
     <div class="row">
         <div class="col-8">
-            <mat-form-fild style="width: 100%;">
+            <mat-form-field style="width: 100%;">
                 <mat-label>Local</mat-label>
                 <input matInput [(ngModel)]="data.local">
-            </mat-form-fild>
+            </mat-form-field>
         </div>
     </div>
     <div class="row">
+        <div class="col-8">
+            <mat-form-field style="width: 100%;">
+                <mat-label>Resumo</mat-label>
+                <input matInput [(ngModel)]="data.resumo">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div mat-dialog-action aling ="end">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Salvar</button>
+</div>
+
+
+    <!-- <div class="row">
 
         <label id="example-radio-group-label">Categoria</label>
         <mat-radio-group
@@ -19,17 +34,4 @@
                 {{season}}
             </mat-radio-button>
         </mat-radio-group> 
-    </div>
-    <div class="row">
-        <div class="col-8">
-            <mat-form-fild style="width: 100%;">
-                <mat-label>Resumo</mat-label>
-                <input matInput [(ngModel)]="data.resumo">
-            </mat-form-fild>
-        </div>
-    </div>
-</div>
-<div mat-dialog-action aling ="end">
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Salvar</button>
-</div>
+    </div> -->

@@ -18,7 +18,7 @@ app.use(express.json());
 app.get("/demanda", (req,resp) =>{
     var demanda = req.body;
     console.log("GET-Demandas");
-    // 
+
     connection.query("SELECT * FROM demandas",(err,result) =>{
         if(err){
             console.log(err);
@@ -30,8 +30,7 @@ app.get("/demanda", (req,resp) =>{
             
         }
     } );
-    // console.log(JSON.stringify(demanda));
-    // resp.send("OK")
+
 });
 
 
@@ -47,7 +46,8 @@ app.post("/demanda", (req,resp) =>{
 
         }else{
             resp.status(200);
-            resp.json(result)
+            
+            resp.json(result.userId)
             
         }
     } );
