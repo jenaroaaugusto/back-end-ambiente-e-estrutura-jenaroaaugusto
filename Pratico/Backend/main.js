@@ -47,7 +47,7 @@ app.post("/demanda", (req,resp) =>{
         }else{
             resp.status(200);
             
-            resp.json(result.userId)
+            resp.json(result.insertId)
             
         }
     } );
@@ -81,6 +81,7 @@ app.put("/demanda/:demaId",(req,resp) => {
     var demaId= req.params.demaId
     // resp.send("Successful Operation")
     console.log("PUT - Demanda ID: "+demaId);
+    console.log(demaId)
     var demanda = req.body;
 
     connection.query("UPDATE demandas SET ? WHARE iddemandas=?",[demanda,demaId],(err,result) =>{
@@ -139,7 +140,7 @@ app.get("/gerirdemandas:gerirId", (req,resp) =>{
 app.path("/gerirdemandas:gerirId",(req,resp) =>{
     var gerirdemandas = req.params.gerirId
     resp.send("Successful Operation");
-    console.log("PUT - Gerencair Demanda ID: "+gerirId);
+    console.log("PATH - Gerencair Demanda ID: "+gerirId);
 
 });
 

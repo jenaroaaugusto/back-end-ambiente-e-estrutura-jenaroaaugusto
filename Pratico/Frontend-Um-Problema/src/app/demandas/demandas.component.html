@@ -41,7 +41,14 @@
                 <th mat-header-cell *matHeaderCellDef>Status</th>
                 <td mat-cell *matCellDef="let demandas">{{demandas.status}}</td>
             </ng-container>
-        
+            
+            <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let demandas">
+                    <button mat-stroked-button class="float-right" color="primary" (click)="openEditDialog(demandas)" >Editar</button>
+                    <button mat-stroked-button class="float-right" color="primary" (click)="openExcluirDialog(demandas)" >Excluir</button>
+                </td>
+            </ng-container>
         
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

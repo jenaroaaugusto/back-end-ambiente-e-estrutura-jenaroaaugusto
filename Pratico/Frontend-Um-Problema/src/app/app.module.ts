@@ -26,7 +26,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     DemandasComponent,
     UsuariosComponent,
     GestaoComponent,
-    MngDemandaDialog
+    MngDemandaDialog,
+    
   ],
   imports: [
     BrowserModule,

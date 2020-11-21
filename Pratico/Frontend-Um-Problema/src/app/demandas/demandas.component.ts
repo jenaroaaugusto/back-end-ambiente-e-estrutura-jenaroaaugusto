@@ -28,7 +28,7 @@ export class Demanda{
   styleUrls: ['./demandas.component.css']
 })
 export class DemandasComponent implements OnInit {
-  displayedColumns: string[]=['iddemandas','categorias','local','resumo','usuario_idusuario','status']
+  displayedColumns: string[]=['iddemandas','categorias','local','resumo','usuario_idusuario','status','acoes']
   // dataSource:Demanda[];
   dataSource = new MatTableDataSource<Demanda>();
   constructor( private service:DemandasService, public dialog:MatDialog) { }
@@ -54,6 +54,29 @@ export class DemandasComponent implements OnInit {
     })
 
 
+  }
+
+  openEditDialog(demanda:Demanda): void{
+    const dialogRef = this.dialog.open(MngDemandaDialog,{
+      width:'750px',
+      data:demanda
+    });
+    
+    dialogRef.afterClosed().subscribe(demanda =>{
+      console.log(demanda);
+      this.service.updateDemanda(demanda).subscribe(_ =>{
+          this.dataSource.data = this.dataSource.data.map(oldDemanda =>{
+              if(oldDemanda.iddemandas=demanda.iddemandas) return demanda;
+          });
+        });
+      });
+  }
+
+  openExcluirDialog(demanda:Demanda): void{
+    this.service.deleteDemanda(demanda.iddemandas).subscribe(_ =>{
+      this.dataSource.data = this.dataSource.data.filter(oldDemanda => oldDemanda.iddemandas != demanda.iddemandas)
+
+    });
   }
 }
  
