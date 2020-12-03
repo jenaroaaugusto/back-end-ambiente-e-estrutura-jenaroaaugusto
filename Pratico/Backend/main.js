@@ -28,8 +28,9 @@ app.post('/auth', (req,resp)  =>{
             resp.send({token: null, usuario: usuario,success:false});
         }else{
             let token = jwt.sign({id: usuario.nome}, 'umproblema', {expiresIn:6000});
+            console.log("Entro"+result.length )
             resp.status(200);
-            resp.send({token:token,usuario:usuario});
+            resp.send({token:token,usuario:usuario,success:true});
         }
     });
 });

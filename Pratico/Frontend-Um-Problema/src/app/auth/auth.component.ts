@@ -35,7 +35,9 @@ export class AuthComponent implements OnInit {
 
   auth(){
     this.authService.auth(this.nome, this.senha).subscribe( response =>{
-      if(response.success ==true){
+      console.log("Response" + response.token)
+      if(response.success == true){
+        console.log("Entro autente")
         this.globals.loginData.token = response.token;
         this.globals.loginData.usuario = response.usuario;
         this.authInvalido=false;
