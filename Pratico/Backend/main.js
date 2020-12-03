@@ -1,5 +1,6 @@
 const { json } = require("body-parser");
 var express = require("express");
+var jwt = require("jsonwebtoken");
 var cors = require('cors');
 var app = express();
 
@@ -14,8 +15,43 @@ var connection = mysql.createConnection({
 app.use(cors());
 app.use(express.json());
 
+app.post('/auth', (req,resp)  =>{
+    var user = req.body;
+    console.log(user)
 
-app.get("/demanda", (req,resp) =>{
+    connection.query("SELECT * FROM usuario WHERE nome =? and senha = ?",[user.nome, user.senha], (err,result) =>{
+        console.log(user.nome)
+        var usuario = result[0];
+        console.log(usuario)
+        if (result.length == 0){
+            resp.status(401);
+            resp.send({token: null, usuario: usuario,success:false});
+        }else{
+            let token = jwt.sign({id: usuario.nome}, 'umproblema', {expiresIn:6000});
+            resp.status(200);
+            resp.send({token:token,usuario:usuario});
+        }
+    });
+});
+
+verifica_token = (req, resp, next) =>{
+    var token =  req.headers['x-access-token']; 
+
+    if(!token){
+        return resp.status(401).end();
+    }
+
+    jwt.verify(token,'umproblema',(err,decoded) => {
+        if (err)
+            return resp.status(401).end();
+
+        req.usuario =decoded.id;
+        next();
+    });
+
+}
+
+app.get("/demanda",verifica_token,(req,resp) =>{
     var demanda = req.body;
     console.log("GET-Demandas");
 
@@ -35,7 +71,7 @@ app.get("/demanda", (req,resp) =>{
 
 
 // Rutes for Re
-app.post("/demanda", (req,resp) =>{
+app.post("/demanda",verifica_token, (req,resp) =>{
     var demanda = req.body;
     console.log("POST-Demandas");
     // 
@@ -55,7 +91,7 @@ app.post("/demanda", (req,resp) =>{
     // resp.send("OK")
 });
 
-app.get("/demanda/:demaId", (req,resp) =>{
+app.get("/demanda/:demaId",verifica_token, (req,resp) =>{
     var demaId= req.params.demaId
     console.log("GET - Demanda ID: "+demaId);
 
@@ -77,7 +113,7 @@ app.get("/demanda/:demaId", (req,resp) =>{
     // console.log("GET - Demanda ID: "+demaId);
 });
 
-app.put("/demanda/:demaId",(req,resp) => {
+app.put("/demanda/:demaId",verifica_token,(req,resp) => {
     var demaId= req.params.demaId
     // resp.send("Successful Operation")
     console.log("PUT - Demanda ID: "+demaId);
@@ -99,7 +135,7 @@ app.put("/demanda/:demaId",(req,resp) => {
 
 });
 
-app.delete("/demanda/:demaId",(req,resp) => {
+app.delete("/demanda/:demaId",verifica_token,(req,resp) => {
     var demaId= req.params.demaId
 
     resp.send("Successful Operation")
@@ -124,33 +160,33 @@ app.delete("/demanda/:demaId",(req,resp) => {
 
 // Gerecenciar demandas
 
-app.post("/gerirdemandas", (req,resp) =>{
+app.post("/gerirdemandas", verifica_token,(req,resp) =>{
     var gerirdemandas = req.body;
 
     console.log(JSON.stringify(gerirdemandas));
     resp.send("OK")
 });
 
-app.get("/gerirdemandas:gerirId", (req,resp) =>{
+app.get("/gerirdemandas:gerirId", verifica_token,(req,resp) =>{
     var gerirId= req.params.gerirId
     resp.send("Successful Operation");
     console.log("GET - Gerencair Demanda ID: "+gerirId);
 });
 
-app.path("/gerirdemandas:gerirId",(req,resp) =>{
+app.path("/gerirdemandas:gerirId",verifica_token,(req,resp) =>{
     var gerirdemandas = req.params.gerirId
     resp.send("Successful Operation");
     console.log("PATH - Gerencair Demanda ID: "+gerirId);
 
 });
 
-app.put("/gerirdemandas:gerirId",(req,resp) => {
+app.put("/gerirdemandas:gerirId",verifica_token,(req,resp) => {
     var gerirId= req.params.gerirId
     resp.send("Successful Operation")
     console.log("PUT - Gerencair Demanda ID: "+gerirId);
 });
 
-app.delete("/gerirdemandas:gerirId",(req,resp) => {
+app.delete("/gerirdemandas:gerirId",verifica_token,(req,resp) => {
     var gerirId= req.params.gerirId
 
     resp.send("Successful Operation")
@@ -161,33 +197,33 @@ app.delete("/gerirdemandas:gerirId",(req,resp) => {
 
 // Gerenciar Usuario
 
-app.post("/usuario", (req,resp) =>{
+app.post("/usuario",verifica_token, (req,resp) =>{
     var usuario = req.body;
 
     console.log(JSON.stringify(usuario));
     resp.send("OK")
 });
 
-app.get("/usuario/:userId", (req,resp) =>{
+app.get("/usuario/:userId",verifica_token, (req,resp) =>{
     var userId= req.params.userId
     resp.send("Successful Operation")
     console.log("GET - User ID: "+userId);
 });
 
-app.put("/usuario/:userId",(req,resp) => {
+app.put("/usuario/:userId",verifica_token,(req,resp) => {
     var userId= req.params.userId
     resp.send("Successful Operation")
     console.log("PUT - User ID: "+userId);
 });
 
-app.path("/usuario/:userId",(req,resp) =>{
+app.path("/usuario/:userId",verifica_token,(req,resp) =>{
     var gerirdemandas = req.params.gerirId
     resp.send("Successful Operation");
     console.log("PUT - User ID: "+gerirId);
 
 });
 
-app.delete("/usuario/:userId",(req,resp) => {
+app.delete("/usuario/:userId",verifica_token,(req,resp) => {
     var userId= req.params.userId
 
     resp.send("Successful Operation")

@@ -1,0 +1,17 @@
+
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span> Um problema App</span>
+    <div>
+      <a mat-button [routerLink]="'/home/demandas'"  >Demandas</a>
+      <a mat-button [routerLink]="'/home/usuarios'"  >Usuarios</a>
+      <a mat-button [routerLink]="'/home/gestao'"    >Gestão</a>
+
+
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+
+</div>
