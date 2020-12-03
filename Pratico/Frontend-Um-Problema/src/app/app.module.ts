@@ -19,6 +19,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { HomeComponent } from './home/home.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
+import { Globals } from './globals/globals';
 
 @NgModule({
   declarations: [
@@ -27,6 +31,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     UsuariosComponent,
     GestaoComponent,
     MngDemandaDialog,
+    HomeComponent,
+    AuthComponent,
     
   ],
   imports: [
@@ -55,7 +61,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   //   MatFormFieldModule,
   //   MatDialogModule,
   // ],
-  providers: [],
+  providers: [AuthGuard,Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
